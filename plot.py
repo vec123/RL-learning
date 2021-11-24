@@ -37,9 +37,20 @@ def plot(data, dim):
             plt.close()
 
 #plot(states, 0)
-data =read_data_to_list("States_all.csv")
+data =read_data_to_list("states_all.csv")
 for i in range(0,data.shape[0]):
     plot(data,i)
+
+data =read_data_to_list("actions_all.csv")
+for i in range(0,data.shape[0]):
+        plot(data,i)
+
+
+data =read_data_to_list("sine_from_env.csv")
+for i in range(0,data.shape[0]):
+        plot(data,i)
+
+        
 #for i in range(0,len(data)):
 #    plt.figure()
 #    plt.plot(data[i][:])
