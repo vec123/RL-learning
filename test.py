@@ -32,7 +32,7 @@ actions_all = []
 states_all = []
 sines_all = []
 rewards_all = []
-for episode in range(5):
+for episode in range(50):
     print(episode)
     if episode != 0:
         print(episode_reward)
