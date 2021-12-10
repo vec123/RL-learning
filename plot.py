@@ -26,31 +26,35 @@ def read_data_to_list(csv_file):
 
 #states = read_data_to_list("states_all.csv")
 
-def plot(data, dim):
+def plot(data, dim,name):
         for episode in range(0,data.shape[0]):
             plt.figure()
-            plt.plot(data[episode][0:data.shape[1]][dim])
+            plt.plot(data[episode, :, dim])
             plt.title("Dimension: {}".format(dim))
             plt.xlabel('Time')
-            plt.ylabel('Actions')
-            plt.savefig("Plots/Actions_{}_dim_{}".format(episode,dim))
+            plt.ylabel(name)
+            plt.savefig("Plots/{}_{}_dim_{}".format(name,episode,dim))
             plt.close()
 
 #plot(states, 0)
 data =read_data_to_list("states_all.csv")
-for i in range(0,data.shape[0]):
-    plot(data,i)
+for i in range(0,data.shape[2]):
+    plot(data,i,"states")
 
 data =read_data_to_list("actions_all.csv")
-for i in range(0,data.shape[0]):
-        plot(data,i)
+for i in range(0,data.shape[2]):
+        plot(data,i,"action")
+
+data =read_data_to_list("rewards_all.csv")
+for i in range(0,data.shape[2]):
+        plot(data,i,"rewards")
 
 
 data =read_data_to_list("sine_from_env.csv")
-for i in range(0,data.shape[0]):
-        plot(data,i)
+for i in range(0,data.shape[2]):
+        plot(data,i,"sine_from_env")
 
-        
+
 #for i in range(0,len(data)):
 #    plt.figure()
 #    plt.plot(data[i][:])
