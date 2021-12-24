@@ -33,18 +33,14 @@ class SineEnv(gym.Env):
     done = False
     self.current_t += 1
     obs_old = self.obs
-    self.obs = float(action)
-
+    self.obs = 3.7*float(action)
 
     if self.current_t != 0:
         old_reward=self.reward
-
     if self.obs != self.sine[self.current_t-1]:
-         self.reward = - 3*np.absolute(self.obs - self.sine[self.current_t-1]) + self.current_t #np.power(1.1,self.current_t)
-
+         self.reward = -1*np.absolute(self.obs - self.sine[self.current_t-1]) - np.absolute(obs_old-self.obs) +0.2 #np.power(1.1,self.current_t)
     elif self.obs == self.sine[self.current_t-1]:
-
-        self.reward = 10000000000000
+        self.reward = 100
 
     if self.current_t >= self.episode_duration:
         done = True
@@ -53,8 +49,8 @@ class SineEnv(gym.Env):
     else:
         print("this should never be printed 2")
 
-    if  np.absolute(self.obs - self.sine[self.current_t-1]) > 1.4:
-        self.reward = -10000000000000
+    if  np.absolute(self.obs - self.sine[self.current_t-1]) > 2:
+        self.reward = -200 + self.current_t
         done = True
 
     info = done

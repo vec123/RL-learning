@@ -5,7 +5,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from DDPG_agent import DDPGagent
 from utils import *
-from environment import SineEnv
+from Sine_environment import SineEnv
+from Pendulum_env import PendulumEnv
 import csv
 
 
@@ -17,21 +18,24 @@ amplitude = 1
 frequency = 0.005
 episode_duration = 501
 
-#env = NormalizedEnv(gym.make("Pendulum-v0"))
+env = NormalizedEnv(gym.make("Pendulum-v0"))
 #env = gym.make("Pendulum-v0")
-env = SineEnv(amplitude, frequency, episode_duration, num_actions=num_actions, num_states=num_states, lower_action_bound = lower_action_bound , higher_action_bound = higher_action_bound )
+#env = SineEnv(amplitude, frequency, episode_duration, num_actions=num_actions, num_states=num_states, lower_action_bound = lower_action_bound , higher_action_bound = higher_action_bound )
 #env2 = NormalizedEnv(env)
 
 
 agent = DDPGagent(env)
 noise = OUNoise(env.action_space)
 batch_size = 128
+
+
 rewards = []
 avg_rewards = []
 actions_all = []
 states_all = []
 sines_all = []
 rewards_all = []
+
 for episode in range(50):
     print(episode)
     if episode != 0:
@@ -44,8 +48,8 @@ for episode in range(50):
     sines_l = []
     reward_l = []
     done = False
-    step =0
-    while step in range(500) and done == False:
+    step = 0
+    while step in range(200) and done == False:
         action = agent.get_action(state)
         action = noise.get_action(action, step)
         new_state, reward, done, _ = env.step(action)
